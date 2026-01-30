@@ -72,3 +72,41 @@ VALUES
 (4, 'Russo', 'Giulia', '2000-02-25', 'F', 'Via Venezia, 15', 4, 4),
 (5, 'Ferrari', 'Paolo', '1995-04-30', 'M', 'Piazza Municipio, 6', 5, 5);
 
+--1. Gli elenchi degli elettori (con cognome, nome e data di nascita), assegnati ad un seggio
+-- (di cui viene fornito il numero), distinti per sesso
+
+SELECT e.Nome, e.Cognome, e.DataNascita, e.sesso
+FROM Elettore e, Seggio s
+WHERE e.NumSeggio = s.NumSeggio
+AND s.NumSeggio = :seggio
+ORDER BY e.Sesso;
+
+--tutti gli elettori nel seggio 1
+UPDATE Elettore
+SET NumSeggio = 1;
+
+-- 2. L’elenco di tutti i seggi con numero, edificio dove è collocato e nome del presidente di
+-- seggio
+
+SELECT  s.NumSeggio, ed.NomeEdificio, c.Ruolo
+FROM Seggio s, Edificio ed, ComponenteSeggio c, Elettore e
+WHERE s.IdEdificio = ed.ID 
+AND e.NumSeggio = s.NumSeggio
+AND c.ID = e.IDComponente
+AND c.Ruolo LIKE 'Presidente';
+
+-- 3. Dato il numero di un seggio, l’elenco con i nomi dei componenti del seggio, presidente e
+-- scrutatori
+-- 4. L’elenco delle vie con il numero di seggio assegnato a ciascuna
+-- 5. Il numero dei seggi assegnato a ciascuna via
+-- 6. L’elenco degli edifici
+-- 7. L’elenco dei custodi assegnati ai vari edifici
+-- 8. L’elenco degli elettori che si presentano per la prima volta a votare (>= 18 anni di età
+-- rispetto alla data odierna)
+-- 9. L’elenco degli edifici che hanno un numero di seggi uguale ad un valore prefissato
+-- 10. L’edificio che ha il maggior numero di seggi
+-- 11. Il numero di seggio con relativo edificio e via, che ha il maggior numero di elettori
+-- 12. Conteggio totale degli elettori per ogni seggio
+-- 13. Distribuzione elettori per sesso e ruolo nel seggio
+-- 14. Conteggio degli elettori nati in un determinato mese
+-- 15. Seggi con meno di 2 elettori o senza componenti assegnati
